@@ -1,4 +1,5 @@
 .. -*- mode: rst; coding: utf-8; -*-
+
 =================
 mlab
 =================
@@ -334,7 +335,7 @@ What's Missing?
 - Better support for cells.
 
 - Thread-safety. If you think there's a need please let me know (on the
-  `project mailing list`_); at the moment you can /probably/ get away with
+  `StackOverflow tagged query`_); at the moment you can /probably/ get away with
   using one seperate MlabWrap object per thread without implementing your own
   locking, but even that hasn't been tested.
 
