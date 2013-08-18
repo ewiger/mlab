@@ -19,7 +19,7 @@ Primer
 
 Quick installation::
 
-pip install mlab
+  pip install mlab
 
 Start working with the library by picking a MATLAB release that you have locally installed::
 
@@ -162,29 +162,31 @@ Assuming you have python 2.7.5 (e.g. C:\Python27) and setuptools
 Christoph Gohlke: http://www.lfd.uci.edu/~gohlke/pythonlibs/ Also see official
 SciPy website for latest status, it might that::
 
-   easy_install.exe numpy
+  easy_install.exe numpy
 
 would do the trick.
 
 
 2) You would also need The PyWin32 module by Mark Hammond::
 
-   easy_install pywin32
+  easy_install.exe pywin32
 
-See (see `Windows`_) for further troubleshooting.
+also see Windows in Troubleshooting_.
 
 Documentation
 -------------
 - for lazy people
 
-  >>> from mlab import mlab; mlab.plot([1,2,3],'-o')
+  >>> from mlab.releases import latest_release as matlab
+  >>> matlab.plot([1,2,3],'-o')
 
   .. image:: ugly-plot.png
      :alt: ugly-plot
 
 - a slightly prettier example
 
-  >>> from mlabwrap import mlab; from numpy import *
+  >>> from mlab.releases import latest_release as matlab
+  >>> from numpy import *
   >>> xx = arange(-2*pi, 2*pi, 0.2)
   >>> mlab.surf(subtract.outer(sin(xx),cos(xx)))
 
@@ -192,7 +194,7 @@ Documentation
      :alt: surface-plot
 
 - for a complete description:
-  Just run ``pydoc mlabwrap``.
+  Just run ``pydoc mlab``.
 
 - for people who like tutorials:
   see below
