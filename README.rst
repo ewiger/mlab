@@ -16,6 +16,23 @@ http://code.google.com/p/danapeerlab/source/browse/trunk/freecell/depends/common
 
 .. contents::
 
+Description
+-----------
+Mlabwrap is a high-level python to `Matlab®`_ bridge that lets Matlab look
+like a normal python library.
+
+    Thanks for your terrific work on this very-useful Python tool!
+
+    -- George A. Blaha, Senior Systems Engineer,
+       Raytheon Integrated Defense Systems
+
+
+mlab is a repackaging effort to make things up-to-date.
+
+
+.. _Matlab®:
+   http://www.mathworks.com
+
 Related
 -------
 
@@ -32,28 +49,11 @@ Also note that in Ubuntu you need to ``sudo apt-get install csh``
 For details see
 http://github.com/aweinstein/mlabwrap
 
-
-Description
------------
-Mlabwrap is a high-level python to `Matlab®`_ bridge that lets Matlab look
-like a normal python library.
-
-    Thanks for your terrific work on this very-useful Python tool!
-
-    -- George A. Blaha, Senior Systems Engineer,
-       Raytheon Integrated Defense Systems
-
-
-
-.. _Matlab®:
-   http://www.mathworks.com
-
-
 News
 ----
 
 **2013-07-26** 1.1.1 Repacking a library as mlab project. Including code
-from 
+for Windows (matlabraw.cpp is off for now). 
 
 **2009-10-26** 1.1 fixes an incorrect declaration in ``mlabraw.cpp``
 that caused compilation problems for some users and incorporates a
@@ -98,19 +98,23 @@ candidates.
 License
 -------
 
-mlabwrap is under MIT license, see LICENSE.txt. mlabraw is under a BSD-style
+mlab (and mlabwrap) is under MIT license, see LICENSE.txt. mlabraw is under a BSD-style
 license, see the mlabraw.cpp.
 
 Download
 --------
-<http://sourceforge.net/projects/mlabwrap/>
-
-(P.S. the activity stats are bogus -- look at the release dates).
-
+<http://github.com/ewiger/mlab>
 
 Installation
 ------------
 
+mlab should work with python>=2.7 (downto python 2.2, with minor coaxing) and
+either numpy_ (recommended) or Numeric (obsolete) installed and Matlab 6, 6.5,
+7.x and 8.x under Linux, OS X® and Windows® (see `OS X`_) on 32- or 64-bit
+machines.
+
+Linux
+'''''
 If you're lucky (linux, Matlab binary in ``PATH``)::
 
   python setup.py install
@@ -120,10 +124,26 @@ and make sure your ``PYTHONPATH`` is set accordingly.)
 
 If things do go awry, see Troubleshooting_.
 
-Although I myself use only linux, mlabwrap should work with python>=2.4 (even
-downto python 2.2, with minor coaxing) and either numpy_ (recommended) or
-Numeric (obsolete) installed and Matlab 6, 6.5 or 7.x under Linux, OS X® and
-Windows® (see `OS X`_) on 32- or 64-bit machines.
+Windows
+'''''''
+
+Assuming you have python 2.7.5 (e.g. C:\Python27) and setuptools
+("easy_install.exe") installed and on your PATH.
+
+1) Download and install numpy package. You can use packages provided by
+Christoph Gohlke: http://www.lfd.uci.edu/~gohlke/pythonlibs/ Also see official
+SciPy website for latest status, it might that::
+   
+   easy_install.exe numpy 
+   
+would do the trick.
+   
+
+2) You would also need The PyWin32 module by Mark Hammond::
+   
+   easy_install pywin32
+
+See (see `Windows`_) for further troubleshooting.
 
 Documentation
 -------------
