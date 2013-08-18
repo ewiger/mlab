@@ -6,13 +6,41 @@ mlab
 
 Mlab is a high-level python to Matlab® bridge that lets Matlab look like a normal python library.
 
-This python library is based on the work of original mlabwrap project 
+This python library is based on the work of original mlabwrap project
 
 http://mlabwrap.sourceforge.net/
 
 and Dani Valevski (from Dana Pe'er's lab):
 
 http://code.google.com/p/danapeerlab/source/browse/trunk/freecell/depends/common/python/matlabpipe.py
+
+Primer
+------
+
+Quick installation::
+
+pip install mlab
+
+Start working with the library by picking a MATLAB release that you have locally installed::
+
+  from mlab.releases import latest_release
+  from matlab import matlabroot
+
+  print matlabroot()
+
+where **latest_release** is a MlabWrap instance, **matlabroot** is wrapper around MATLAB function.
+Please note that matlab module is dynamically created instance, which is in this case referencing
+**latest_release** object.
+
+MATLAB installation discovery mechanism is implemented by mlab.releases module in such a way, that
+you have to specify the release version you want to use first, by importing it. Only then you can
+import from matlab module::
+
+  from mlab.releases import R2010b
+  from matlab import matlabroot
+
+Also see mlab.releases.get_available_releases().
+
 
 .. contents::
 
@@ -53,7 +81,7 @@ News
 ----
 
 **2013-07-26** 1.1.1 Repacking a library as mlab project. Including code
-for Windows (matlabraw.cpp is off for now). 
+for Windows (matlabraw.cpp is off for now).
 
 **2009-10-26** 1.1 fixes an incorrect declaration in ``mlabraw.cpp``
 that caused compilation problems for some users and incorporates a
@@ -133,14 +161,14 @@ Assuming you have python 2.7.5 (e.g. C:\Python27) and setuptools
 1) Download and install numpy package. You can use packages provided by
 Christoph Gohlke: http://www.lfd.uci.edu/~gohlke/pythonlibs/ Also see official
 SciPy website for latest status, it might that::
-   
-   easy_install.exe numpy 
-   
+
+   easy_install.exe numpy
+
 would do the trick.
-   
+
 
 2) You would also need The PyWin32 module by Mark Hammond::
-   
+
    easy_install pywin32
 
 See (see `Windows`_) for further troubleshooting.
@@ -532,7 +560,7 @@ and ``mlab._set('SOME_VAR', somevalue)``.
 Support and Feedback
 --------------------
 
-Post your questions directly on Stack overflow with tags ``matlab``, ``mlab`` 
+Post your questions directly on Stack overflow with tags ``matlab``, ``mlab``
 and ``python``
 
 .. _StackOverflow tagged query:

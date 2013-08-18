@@ -402,7 +402,7 @@ class MlabWrap(object):
         function call. This saves a function call in matlab but means that the
         memory used up by the arguments will remain unreclaimed till
         overwritten."""
-        self._session = mlabraw.open(os.getenv("MLABRAW_CMD_STR", ""))
+        self._session = mlabraw.open()
         atexit.register(lambda handle=self._session: mlabraw.close(handle))
         self._proxies = weakref.WeakValueDictionary()
         """Use ``mlab._proxies.values()`` for a list of matlab object's that
@@ -559,7 +559,7 @@ class MlabWrap(object):
                              "','".join(tempargs))
     # this is really raw, no conversion of [[]] -> [], whatever
     def _get(self, name, remove=False):
-        r"""Directly access a variable in matlab space. 
+        r"""Directly access a variable in matlab space.
 
         This should normally not be used by user code."""
         # FIXME should this really be needed in normal operation?
@@ -594,7 +594,7 @@ class MlabWrap(object):
 
     def _set(self, name, value):
         r"""Directly set a variable `name` in matlab space to `value`.
-        
+
         This should normally not be used in user code."""
         if isinstance(value, MlabObjectProxy):
             mlabraw.eval(self._session, "%s = %s;" % (name, value._name))
@@ -619,9 +619,9 @@ class MlabWrap(object):
         if attr.startswith('__'): raise AttributeError, attr
         assert not attr.startswith('_') # XXX
         # print_ -> print
-        if attr[-1] == "_": 
+        if attr[-1] == "_":
             name = attr[:-1]
-        else: 
+        else:
             name = attr
         try:
             nout = self._do("nargout('%s')" % name)
@@ -644,8 +644,9 @@ class MlabWrap(object):
         return mlab_command
 
 
-mlab = MlabWrap()
 MlabError = mlabraw.error
+from mlabraw import MatlabReleaseNotFound, set_release as choose_release, find_available_releases
+
 
 def saveVarsInMat(filename, varNamesStr, outOf=None, **opts):
     """Hacky convinience function to dump a couple of python variables in a
@@ -662,9 +663,7 @@ def saveVarsInMat(filename, varNamesStr, outOf=None, **opts):
         assert varnames
         mlab._do("clear('%s')" % "', '".join(varnames), nout=0)
 
-__all__ = ['mlab', 'saveVarsInMat', 'MlabWrap', 'MlabError']
 
-# Uncomment the following line to make the `mlab` object a library so that
-# e.g. ``from mlabwrap.mlab import plot`` will work
+all__ = ['saveVarsInMat', 'MlabWrap', 'MlabError',
+  'choose_release', 'find_available_releases', 'MatlabReleaseNotFound']
 
-## if not sys.modules.get('mlabwrap.mlab'): sys.modules['mlabwrap.mlab'] = mlab
