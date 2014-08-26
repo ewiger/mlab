@@ -80,6 +80,9 @@ http://github.com/aweinstein/mlabwrap
 News
 ----
 
+**2014-08-26** 1.1.3 Applying patch to add support for Windows via COM.
+Credits to Sergey Matyunin, Amro@stackoverflow
+
 **2013-07-26** 1.1.1 Repacking a library as mlab project. Including code
 for Windows (matlabraw.cpp is off for now).
 
@@ -171,7 +174,7 @@ would do the trick.
 
   easy_install.exe pywin32
 
-also see Windows in Troubleshooting_.
+also see Windows in `Troubleshooting`_.
 
 Documentation
 -------------
