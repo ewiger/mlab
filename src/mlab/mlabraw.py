@@ -42,6 +42,7 @@ def open():
     if is_win:
         ret = MatlabConnection()
         ret.open()
+        return ret
     else:
         if settings.MATLAB_PATH != 'guess':
             matlab_path = settings.MATLAB_PATH + '/bin/matlab'

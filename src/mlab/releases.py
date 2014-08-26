@@ -88,7 +88,7 @@ class MatlabVersions(dict):
         # Make it a module
         sys.modules['mlab.releases.' + matlab_release] = instance
         sys.modules['matlab'] = instance
-        return MlabWrap()
+        return instance
 
     def pick_latest_release(self):
         return get_latest_release(self._available_releases)

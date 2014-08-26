@@ -279,7 +279,7 @@ class MlabObjectProxy(object):
 
     def __repr__(self):
         output = []
-        mlab._do('disp(%s)' % self._name, nout=0, handle_out=output.append)
+        self._mlabwrap._do('disp(%s)' % self._name, nout=0, handle_out=output.append)
         rep = "".join(output)
         klass = self._mlabwrap._do("class(%s)" % self._name)
 ##         #XXX what about classes?

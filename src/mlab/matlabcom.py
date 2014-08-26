@@ -21,6 +21,11 @@ except:
   print 'win32com in missing, please install it'
   raise
 
+def find_available_releases():
+    # report we have all versions
+    return [('R%d%s' % (y,v), '')
+        for y in range(2006,2015) for v in ('a','b')]
+
 def discover_location(matlab_release):
     pass
 
@@ -62,7 +67,7 @@ class MatlabCom(object):
     """
     self._check_open()
     try:
-      self.eval('quit();')
+      pass    #self.eval('quit();')
     except:
       pass
     del self.client
