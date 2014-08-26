@@ -6,6 +6,7 @@ mlab
 
 Mlab is a high-level python to Matlab® bridge that lets Matlab look like a normal python library.
 
+
 This python library is based on the work of original mlabwrap project
 
 http://mlabwrap.sourceforge.net/
@@ -40,6 +41,15 @@ import from matlab module::
   from matlab import matlabroot
 
 Also see mlab.releases.get_available_releases().
+
+
+------------
+
+
+Original README
+---------------
+
+NOTE Below is the original README from the mlabwrap project. Most of it still applies, but the underlying implementation is different (COM/Pipes replaced the use of the MATLAB Engine API).
 
 
 .. contents::
@@ -575,6 +585,12 @@ and ``python``
 
 Credits
 -------
+
+Yauhen Yakimovich is maintaining the current mlab branch
+https://github.com/ewiger
+
+Amro for recent patch to matlab discovery via COM on Windows
+https://github.com/amroamroamro
 
 Alejandro Weinstein for patches of 1.1pre
 https://github.com/aweinstein/mlabwrap
