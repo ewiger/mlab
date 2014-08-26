@@ -17,14 +17,7 @@ class TestMlabUnix(unittest.TestCase):
         instances = mlab.releases.MatlabVersions(globals())
         assert len(instances.pick_latest_release()) > 0
         with self.assertRaises(MatlabReleaseNotFound):
-           mlab_inst = instances.get_mlab_instance('R2010c')
-
-    def test_function_import(self):
-        #from mlab.releases import latest_release
-        from mlab.releases import R2010b
-        from mlab.releases.R2010b import matlabroot
-        from matlab import matlabroot
-        self.assertTrue(len(matlabroot())>0)
+            mlab_inst = instances.get_mlab_instance('R2010c')
 
     def test_latest_release(self):
         from mlab.releases import latest_release
