@@ -8,8 +8,8 @@ Author: Dani Valevski <daniva@gmail.com>
 
 License: MIT
 '''
-import sys
-is_win = 'win' in sys.platform
+import platform
+is_win = platform.system() == 'Windows'
 if is_win:
     from matlabcom import MatlabCom as MatlabConnection
     from matlabcom import MatlabError as error
