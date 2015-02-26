@@ -24,7 +24,7 @@ Quick installation::
 
 Start working with the library by picking a MATLAB release that you have locally installed::
 
-  from mlab.releases import latest_release
+  from mlab.releases import latest_release as matlab
   from matlab import matlabroot
 
   print matlabroot()
@@ -37,7 +37,7 @@ MATLAB installation discovery mechanism is implemented by mlab.releases module i
 you have to specify the release version you want to use first, by importing it. Only then you can
 import from matlab module::
 
-  from mlab.releases import R2010b
+  from mlab.releases import R2010b as matlab
   from matlab import matlabroot
 
 Also see mlab.releases.get_available_releases().
@@ -49,7 +49,10 @@ Also see mlab.releases.get_available_releases().
 Original README
 ---------------
 
-NOTE Below is the original README from the mlabwrap project. Most of it still applies, but the underlying implementation is different (COM/Pipes replaced the use of the MATLAB Engine API).
+NOTE Below is the original README from the mlabwrap project. Most of it still
+applies, but the underlying implementation is different (COM/Pipes replaced 
+the use of the MATLAB Engine API).  The code samples have been updated for use
+with this project.
 
 
 .. contents::
@@ -201,7 +204,7 @@ Documentation
   >>> from mlab.releases import latest_release as matlab
   >>> from numpy import *
   >>> xx = arange(-2*pi, 2*pi, 0.2)
-  >>> mlab.surf(subtract.outer(sin(xx),cos(xx)))
+  >>> matlab.surf(subtract.outer(sin(xx),cos(xx)))
 
   .. image:: surface-plot.png
      :alt: surface-plot
@@ -227,15 +230,15 @@ Legend: [...] = omitted output
 
 Let's say you want to do use Matlab® to calculate the singular value
 decomposition of a matrix.  So first you import the ``mlab`` pseudo-module and
-Numeric:
+numpy:
 
 
->>> from mlab import mlab
+>>> from mlab.releases import latest_release as matlab
 >>> import numpy
 
 Now you want to find out what the right function is, so you simply do:
 
->>> mlab.lookfor('singular value')
+>>> matlab.lookfor('singular value')
 GSVD   Generalized Singular Value Decompostion.
 SVD    Singular value decomposition.
 [...]
@@ -243,7 +246,7 @@ SVD    Singular value decomposition.
 Then you look up what ``svd`` actually does, just as you'd look up the
 docstring of a python function:
 
->>> help(mlab.svd)
+>>> help(matlab.svd)
 mlab_command(*args, **kwargs)
  SVD    Singular value decomposition.
     [U,S,V] = SVD(X) produces a diagonal matrix S, of the same
@@ -252,7 +255,7 @@ mlab_command(*args, **kwargs)
 
 Then you try it out:
 
->>> mlab.svd(array([[1,2], [1,3]]))
+>>> matlab.svd(array([[1,2], [1,3]]))
 array([[ 3.86432845],
       [ 0.25877718]])
 
@@ -262,7 +265,7 @@ completely different behavior depending on how many output parameters are
 requested, you have to specify explicitly if you want more than 1. So to get
 'U' and also 'S' and 'V' you'd do:
 
->>> U, S, V = mlab.svd([[1,2],[1,3]], nout=3)
+>>> U, S, V = matlab.svd([[1,2],[1,3]], nout=3)
 
 The only other possible catch is that Matlab (to a good approximation)
 basically represents everything as a double matrix. So there are no
@@ -271,12 +274,12 @@ respectively. So, when you pass a flat vector or a scalar to a
 mlab-function, it is autoconverted. Also, integer values are automatically
 converted to double floats. Here is an example:
 
->>> mlab.abs(-1)
+>>> matlab.abs(-1)
 array([       [ 1.]])
 
 Strings also work as expected:
 
->>> mlab.upper('abcde')
+>>> matlab.upper('abcde')
 'ABCDE'
 
 However, although matrices and strings should cover most needs and can be
@@ -286,7 +289,7 @@ equivalents. However, rather than just giving up, mlabwrap just hides
 this fact from the user by using proxies:
 E.g. to create a netlab_ neural net with 2 input, 3 hidden and 1 output node:
 
->>> net = mlab.mlp(2,3,1,'logistic')
+>>> net = matlab.mlp(2,3,1,'logistic')
 
 Looking at ``net`` reveals that is a proxy:
 
@@ -308,13 +311,13 @@ When ``net`` or other proxy objects a passed to mlab functions, they are
 automatically converted into the corresponding Matlab-objects. So to obtain
 a trained network on the 'xor'-problem, one can simply do:
 
->>> net = mlab.mlptrain(net, [[1,1], [0,0], [1,0], [0,1]], [0,0,1,1], 1000)
+>>> net = matlab.mlptrain(net, [[1,1], [0,0], [1,0], [0,1]], [0,0,1,1], 1000)
 
 And test with:
 
->>> mlab.mlpfwd(net2, [[1,0]])
+>>> matlab.mlpfwd(net2, [[1,0]])
 array([       [ 1.]])
->>> mlab.mlpfwd(net2, [[1,1]])
+>>> matlab.mlpfwd(net2, [[1,1]])
 array([       [  7.53175454e-09]])
 
 As previously mentioned, normally you shouldn't notice at all when you are
@@ -325,7 +328,7 @@ mlabwrap also offers proper error handling and exceptions! So trying to
 pass only one input to a net with 2 input nodes raises an Exception:
 
 
->>> mlab.mlpfwd(net2, 1)
+>>> matlab.mlpfwd(net2, 1)
 Traceback (most recent call last):
 [...]
 mlabraw.error: Error using ==> mlpfwd
@@ -334,7 +337,7 @@ Dimension of inputs 1 does not match number of model inputs 2
 
 Warning messages (and messages to stdout) are also displayed:
 
->>> mlab.log(0)
+>>> matlab.log(0.)
 Warning: Log of zero.
 array([       [             -inf]])
 
@@ -348,7 +351,7 @@ underlying mlabraw interface to Matlab® is based).
 
 this:
 
->>> A, B, C = mlab.svd([[1,2],[1,3]], 0, nout=3)
+>>> A, B, C = matlab.svd([[1,2],[1,3]], 0, nout=3)
 
 becomes this:
 
@@ -370,9 +373,9 @@ However *should* you need low-level access, then that is equally available
 (and *with* error reporting); basically just replace ``pymat`` with
 ``mlabraw`` above and use ``mlab._session`` as session), i.e
 
->>> from mlab import mlab
->>> import mlabraw
->>> mlabraw.put(mlab._session, "X", [[1,2], [1,3]])
+>>> from mlab.releases import latest_release as matlab
+>>> from mlab import mlabraw
+>>> mlabraw.put(matlab._session, "X", [[1,2], [1,3]])
 [...]
 
 Before you resort to this you should ask yourself if it's really a good idea;
@@ -381,7 +384,7 @@ high, so the additional python overhead shouldn't normally matter much -- if
 efficiency becomes an issue it's probably better to try to chunk together
 several matlab commands in an ``.m``-file in order to reduce the number of
 matlab calls. If you're looking for a way to execute "raw" matlab for specific
-purposes, ``mlab._do`` is probably a better idea. The low-level ``mlabraw``
+purposes, ``matlab._do`` is probably a better idea. The low-level ``mlabraw``
 API is much more likely to change in completely backwards incompatible ways in
 future versions of mlabwrap. You've been warned.
 
@@ -416,13 +419,13 @@ strings...) to Matlab matrices and vice versa. On top of this I then built a
 pure python module that with various bells and whistles gives the impression
 of providing a Matlab "module".
 
-This is done by a class that manages a single Matlab session (of which ``mlab``
+This is done by a class that manages a single Matlab session (of which ``matlab``
 is an instance) and creates methods with docstrings on-the-fly. Thus, on the
-first call of ``mlab.abs(1)``, the wrapper looks whether there already is a
+first call of ``matlab.abs(1)``, the wrapper looks whether there already is a
 matching function in the cache. If not, the docstring for ``abs`` is looked up
 in Matlab and Matlab's flimsy introspection abilities are used to determine
 the number of output arguments (0 or more), then a function with the right
-docstring is dynamically created and assigned to ``mlab.abs``. This function
+docstring is dynamically created and assigned to ``matlab.abs``. This function
 takes care of the conversion of all input parameters and the return values,
 using proxies where necessary. Proxy are a bit more involved and the proxy
 pickling scheme uses Matlab's ``save`` command to create a binary version of
@@ -558,18 +561,18 @@ Function Handles and callbacks into python
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 People sometimes try to pass a python function to a matlab function (e.g.
-``mlab.fzero(lambda x: x**2-2, 0)``) which will result in an error messages
+``matlab.fzero(lambda x: x**2-2, 0)``) which will result in an error messages
 because callbacks into python are not implemented (I'm not even it would even
 be feasible). Whilst there is no general workaround, in some cases you can
 just create an equivalent matlab function on the fly, e.g. do something like
-this: ``mlab.fzero(mlab.eval('@(x) x^2-2', 0))``.
+this: ``matlab.fzero(matlab.eval('@(x) x^2-2', 0))``.
 
 Directly manipulating variables in Matlab® space
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In certain (rare!) certain cases it might be necessary to directly access or
-set a global variable in matlab. In these cases you can use ``mlab._get('SOME_VAR')``
-and ``mlab._set('SOME_VAR', somevalue)``.
+set a global variable in matlab. In these cases you can use ``matlab._get('SOME_VAR')``
+and ``matlab._set('SOME_VAR', somevalue)``.
 
 
 Support and Feedback
