@@ -86,8 +86,7 @@ class MatlabCom(object):
     #print ret
     if identify_erros and ret.rfind('???') != -1:
       begin = ret.rfind('???') + 4
-      end = ret.find('\n', begin)
-      raise MatlabError(ret[begin:end])
+      raise MatlabError(ret[begin:])
     return ret
 
   def get(self, names_to_get, convert_to_numpy=True):
